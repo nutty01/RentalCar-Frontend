@@ -1,1 +1,23 @@
-<p>customer works!</p>
+<div *ngIf="dataLoaded == false" class="d-flex justify-content-center">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div class="table-responsive">
+  <table *ngIf="dataLoaded == true" class="table">
+    <thead>
+      <tr>
+        <th>Customer Id</th>
+        <th>User Id</th>
+        <th>Company Name</th>
+      </tr>
+    </thead>
+
+    <tr *ngFor="let customer of customers">
+      <td>{{ customer.id }}</td>
+      <td>{{ customer.userId }}</td>
+      <td>{{ customer.companyName }}</td>
+    </tr>
+  </table>
+</div>
