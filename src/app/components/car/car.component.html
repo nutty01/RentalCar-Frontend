@@ -1,25 +1,62 @@
-<div *ngIf="dataLoaded == false" class="d-flex justify-content-center">
-  <div class="spinner-border" role="status">
-    <span class="visually-hidden">Loading...</span>
-  </div>
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-primary"
+  role="status"
+>
+  <span class="visually-hidden">Loading...</span>
 </div>
 
-<div class="table-responsive">
-  <table *ngIf="dataLoaded == true" class="table">
-    <thead>
-      <tr>
-        <th>Brand Name</th>
-        <th>Car Name</th>
-        <th>Color Name</th>
-        <th>Daily Price</th>
-      </tr>
-    </thead>
+<div class="row">
+  <div
+    *ngFor="let car of carDetail"
+    class="card"
+    style="width: 25rem; margin-left: 15px; margin-top: 10px"
+  >
+    <img
+      *ngIf="!car.carImage"
+      src="{{ imageUrl }}/{{ car.imagePath }}"
+      class="card-img-top"
+      style="object-fit: cover"
+      width="100"
+      height="160"
+      alt="..."
+    />
+    <img
+      routerLink="/cars/cardetail/{{ car.id }}"
+      *ngIf="car.carImage"
+      [src]="defaultPath + car.imagePath"
+      class="card-img-top"
+      style="object-fit: cover"
+      width="100"
+      height="160"
+      alt="..."
+    />
+    <div class="card-body">
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <span class="float-start">Car</span>
+          <span class="float-end"
+            >{{ car.brandName | uppercase }} {{ car.carName | uppercase }}</span
+          >
+        </li>
+        <li class="list-group-item">
+          <span class="float-start">Model</span>
+          <span class="float-end">{{ car.modelYear }}</span>
+        </li>
+        <p class="card-text text-center h3 mt-3">₺{{ car.dailyPrice }}</p>
 
-    <tr *ngFor="let car of cars">
-      <td>{{ car.brandName }}</td>
-      <td>{{ car.carName }}</td>
-      <td>{{ car.colorName }}</td>
-      <td>{{ car.dailyPrice }}</td>
-    </tr>
-  </table>
+        <div class="d-flex justify-content-end align-items-center">
+          <div class="btn-group">
+            <button
+              type="button"
+              class="btn btn-success"
+              routerLink="/cars/car-detail/{{ car.id }}"
+            >
+              Details
+            </button>
+          </div>
+        </div>
+      </ul>
+    </div>
+  </div>
 </div>

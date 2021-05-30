@@ -35,4 +35,14 @@ export class ColorComponent implements OnInit {
       return 'list-group-item';
     }
   }
+  clearCurrentColor() {
+    this.currentColor = { id: 0, name: '' };
+  }
+  getAllColorClass() {
+    if (!this.currentColor) {
+      return 'list-group-item list-group-item-dark';
+    } else {
+      return 'list-group-item ';
+    }
+  }
 }
