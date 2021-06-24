@@ -11,4 +11,5 @@ export interface CarDetailDto {
   dailyPrice: number;
   modelYear: number;
   carImage: CarImage[];
+  minFindexScore?: number;
 }

@@ -1,5 +1,9 @@
 export interface Customer {
-  id: number;
+  customerId: number;
   userId: number;
+  firstName: string;
+  lastName: string;
+  email: string;
   companyName: string;
+  findexScore?: number;
 }

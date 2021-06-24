@@ -9,3 +9,6 @@
 #image {
   vertical-align: middle;
 }
+img:hover {
+  cursor: pointer;
+}

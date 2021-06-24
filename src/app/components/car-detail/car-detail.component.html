@@ -1,33 +1,29 @@
-<div class="card rounded-0 mt-4">
+<div class="card rounded-0 mt-4" *ngIf="carDetails">
   <div class="card-header text-center rounded-0 mt-4">
     <div class="card-body">
       <div
-        id="carouselExampleControls"
+        id="carouselExampleIndicators"
         class="carousel slide"
         data-bs-ride="carousel"
       >
-        <div
-          class="carousel-inner d-flex"
-          style="height: 50vh; min-height: 20rem; max-height: 30rem"
-        >
+        <div class="carousel-inner">
           <div
-            *ngFor="let image of images; index as i; first as firstImage"
-            class="carousel-item align-self-center"
-            [ngClass]="{ active: firstImage }"
-            style="height: 100%; width: 100%"
+            *ngFor="let image of images; let i = index"
+            [ngClass]="getSliderClassName(i)"
           >
             <img
-              src="https://localhost:44360/{{ image.imagePath }}"
-              class=""
-              style="height: 100%; width: 100%; object-fit: contain"
-              alt="imageUrl + image.imagePath"
+              src="{{ imageUrl }}/{{ image.imagePath }}"
+              class="d-block w-100"
+              width="500"
+              height="400"
+              alt="..."
             />
           </div>
         </div>
         <button
           class="carousel-control-prev"
           type="button"
-          data-bs-target="#carouselExampleControls"
+          data-bs-target="#carouselExampleIndicators"
           data-bs-slide="prev"
         >
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -36,7 +32,7 @@
         <button
           class="carousel-control-next"
           type="button"
-          data-bs-target="#carouselExampleControls"
+          data-bs-target="#carouselExampleIndicators"
           data-bs-slide="next"
         >
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
@@ -56,7 +52,8 @@
         <th>Color</th>
         <th>Model Year</th>
         <th>Price</th>
-        <th>Kirala</th>
+        <th>Findex Score</th>
+        <th></th>
       </tr>
     </thead>
     <tr *ngIf="carDetails">
@@ -64,15 +61,22 @@
       <td>{{ carDetails.colorName }}</td>
       <td>{{ carDetails.modelYear }}</td>
       <td>₺ {{ carDetails.dailyPrice }}</td>
+      <td>{{ carDetails.minFindexScore }}</td>
       <td>
-        <button
-          routerLink="/cars/rental/{{ carDetails.id }}"
-          type="button"
-          class="btn btn-outline-success"
-        >
-          Kirala
-        </button>
+        <app-rental [carDetails]="carDetails"></app-rental>
       </td>
     </tr>
   </table>
+  <br />
+
+  <div>
+    <button
+      routerLink="/cars"
+      (click)="getBack()"
+      width="50px"
+      class="btn btn-outline-success"
+    >
+      Get Back
+    </button>
+  </div>
 </div>

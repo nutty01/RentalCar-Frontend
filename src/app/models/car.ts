@@ -8,4 +8,5 @@ export interface Car {
   modelYear: number;
   carImage: CarImage[];
   imagePath: string;
+  minFindexScore?: number;
 }

@@ -6,15 +6,60 @@
   <span class="visually-hidden">Loading...</span>
 </div>
 
-<div class="row">
+<div class="row m-2">
+  <div class="col col-4">
+    <select
+      [(ngModel)]="brandFilter"
+      class="form-select"
+      aria-label="Default select example"
+    >
+      <option
+        *ngFor="let brand of brands"
+        [value]="brand.id"
+        [selected]="getSelectedBrand(brand.id)"
+      >
+        {{ brand.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col col-4">
+    <select
+      [(ngModel)]="colorFilter"
+      class="form-select"
+      aria-label="Default select example"
+    >
+      <option
+        *ngFor="let color of colors"
+        [value]="color.id"
+        [selected]="getSelectedColor(color.id)"
+      >
+        {{ color.name }}
+      </option>
+    </select>
+  </div>
+  <div class="col col-2">
+    <a
+      routerLink="/cars/filter/brand/{{ brandFilter }}/color/{{ colorFilter }}"
+      class="btn btn-info"
+      >Filter</a
+    >
+  </div>
+  <div class="col col-2">
+    <a routerLink="/cars" class="btn btn-danger">Clear All</a>
+  </div>
+</div>
+
+<div class="row" style="padding: 10px; margin: 10px">
   <div
     *ngFor="let car of carDetail"
     class="card"
     style="width: 25rem; margin-left: 15px; margin-top: 10px"
   >
     <img
-      *ngIf="!car.carImage"
-      src="{{ imageUrl }}/{{ car.imagePath }}"
+      style="padding-top: 10px"
+      *ngIf="!car.imagePath"
+      src="file:///C:/Users/sena/source/repos/CarRentProject/WebAPI/wwwroot/Images/logo.jpg"
+      routerLink="/cars/car-detail/{{ car.id }}"
       class="card-img-top"
       style="object-fit: cover"
       width="100"
@@ -22,8 +67,9 @@
       alt="..."
     />
     <img
-      routerLink="/cars/cardetail/{{ car.id }}"
-      *ngIf="car.carImage"
+      style="padding-top: 10px"
+      routerLink="/cars/car-detail/{{ car.id }}"
+      *ngIf="car.imagePath"
       [src]="defaultPath + car.imagePath"
       class="card-img-top"
       style="object-fit: cover"

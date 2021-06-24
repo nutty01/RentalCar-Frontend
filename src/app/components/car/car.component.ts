@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Brand } from 'src/app/models/brand';
 import { Car } from 'src/app/models/car';
 import { CarDetailDto } from 'src/app/models/carDetailDto';
 import { CarImage } from 'src/app/models/carImage';
+import { Color } from 'src/app/models/color';
 import { BrandService } from 'src/app/services/brand.service';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
@@ -22,6 +24,11 @@ export class CarComponent implements OnInit {
   images: CarImage[];
   dataLoaded: boolean = false;
   imageUrl = environment.baseURL;
+  brands: Brand[] = [];
+  colors: Color[] = [];
+
+  brandFilter: number;
+  colorFilter: number;
 
   constructor(
     private carService: CarService,
@@ -32,8 +39,15 @@ export class CarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getBrands();
+    this.getColors();
     this.activedRoute.params.subscribe((params) => {
-      if (params['brandId']) {
+      if (params['selectedBrandId'] && params['selectedColorId']) {
+        this.getCarByBrandAndColor(
+          params['selectedBrandId'],
+          params['selectedColorId']
+        );
+      } else if (params['brandId']) {
         this.getCarsByBrand(params['brandId']);
       } else if (params['colorId']) {
         this.getCarsByColor(params['colorId']);
@@ -47,6 +61,17 @@ export class CarComponent implements OnInit {
     this.carService.getCars().subscribe((response) => {
       this.carDetail = response.data;
       this.dataLoaded = true;
+    });
+  }
+  getBrands() {
+    this.brandService.getBrands().subscribe((response) => {
+      this.brands = response.data;
+    });
+  }
+
+  getColors() {
+    this.colorService.getColors().subscribe((response) => {
+      this.colors = response.data;
     });
   }
 
@@ -71,7 +96,38 @@ export class CarComponent implements OnInit {
   getCarImagesByCarId(carId: number) {
     this.carImageService.getCarImagesByCarId(carId).subscribe((response) => {
       this.images = response.data;
-      console.log(response);
     });
+  }
+
+  getCarByBrandAndColor(brandId: number, colorId: number) {
+    this.carService
+      .getcarbybrandidandcolorid(brandId, colorId)
+      .subscribe((response) => {
+        this.carDetail = response.data;
+        this.dataLoaded = true;
+      });
+  }
+
+  getCarClass(car: Car) {
+    if (car == this.currentCar) {
+      return 'table-info cursorPointer';
+    } else {
+      return 'cursorPointer';
+    }
+  }
+  getSelectedBrand(brandId: number) {
+    if (this.brandFilter == brandId) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  getSelectedColor(colorId: number) {
+    if (this.colorFilter == colorId) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
