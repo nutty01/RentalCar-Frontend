@@ -1,3 +1,4 @@
+![image](https://user-images.githubusercontent.com/77552412/135423707-c9b321ea-e13f-4d04-97f1-1b3001155d4e.png)
 # RentalCar
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.5.
